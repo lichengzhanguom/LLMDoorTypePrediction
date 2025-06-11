@@ -31,4 +31,4 @@ python LLMemergencyexitprediction.py
 ```shell
 python calculateaccuracy.py
 ```
-### gt.txt is ground truth of test set, and result.txt is results of baseline
+### 8.gt.txt is ground truth of test set, and result.txt is results of baseline
