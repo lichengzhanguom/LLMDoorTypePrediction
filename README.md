@@ -33,3 +33,7 @@ python calculateaccuracy.py
 ```
 ### 
 8.gt.txt is ground truth of test set, and result.txt is results of baseline
+
+## License
+
+This project is released under the MIT license. Please see the [LICENSE](LICENSE) file for more information.
