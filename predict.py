@@ -105,6 +105,8 @@ client = OpenAI(api_key="")
 #     name = name[1] + '_' + name[2] + '.png'
 #     image_list[name] = 0
 
+# An example is /home/lichezhang/cubicasa5k1/high_quality_7686.png;504,492,606,685,0.9001058;533,421,615,517,0.75795686;
+# 504,492,606,685,0.9001058 is x1, y1, x2, y2, score respectively
 f = open('../Co-DETR/result.txt', 'r')
 lines = f.readlines()
 f.close()
