@@ -23,11 +23,12 @@ python filterwindow.py
 ```shell
 python balconyemergencyprediction.py
 ```
-### Run baseline
+### 6.Run baseline
 ```shell
 python LLMemergencyexitprediction.py
 ```
-### Calculate accuracy
+### 7.Calculate accuracy (baseline)
 ```shell
 python calculateaccuracy.py
 ```
+### gt.txt is ground truth of test set, and result.txt is results of baseline
