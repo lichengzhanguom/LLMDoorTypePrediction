@@ -37,7 +37,7 @@ def compute_iou(box1, box2):
     # Compute IoU
     if union_area == 0:
         return 0.0  # avoid division by zero
-    iou = inter_area / union_area
+    iou = max(inter_area / area1, inter_area / area2)
     return iou
 
 
@@ -47,7 +47,7 @@ f.close()
 threshold = 20
 remove_dict = dict()
 for line in lines:
-    name, result = line.strip().split(':')
+    name, result = line.strip().strip(';').split(':')
     result_list = result.split(';')
     remove_dict[name] = dict()
     for i, res in enumerate(result_list):
@@ -56,8 +56,7 @@ for line in lines:
             continue
         except:
             pass
-        x1, y1, x2, y2, score, cate = result_list[i].split(',')
-        cate = cate.split('^')[0]
+        x1, y1, x2, y2, score = result_list[i].split(',')
         x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
         for j in range(i+1, len(result_list)):
             try:
@@ -65,18 +64,16 @@ for line in lines:
                 continue
             except:
                 pass
-            x_min, y_min, x_max, y_max, score_twice, cate_twice = result_list[j].split(',')
-            cate_twice = cate_twice.split('^')[0]
+            x_min, y_min, x_max, y_max, score_twice = result_list[j].split(',')
             x_min, y_min, x_max, y_max = int(x_min), int(y_min), int(x_max), int(y_max)
             distance_x = max(0,max(x1, x_min) - min(x2, x_max))
             distance_y = max(0,max(y1, y_min) - min(y2, y_max))
             distance = np.sqrt(distance_x ** 2 + distance_y ** 2)
-            if 1:
-                if cate == cate_twice and distance < threshold or compute_iou((x1, y1, x2, y2), (x_min, y_min, x_max, y_max)) > 0.2:
-                    if (x_max - x_min) * (y_max - y_min) < (x2 - x1) * (y2 - y1):
-                        remove_dict[name][j] = 0
-                    else:
-                        remove_dict[name][i] = 0
+            if compute_iou((x1, y1, x2, y2), (x_min, y_min, x_max, y_max)) > 0.8:
+                if (x_max - x_min) * (y_max - y_min) < (x2 - x1) * (y2 - y1):
+                    remove_dict[name][j] = 0
+                else:
+                    remove_dict[name][i] = 0
 
 
 for line in lines:
